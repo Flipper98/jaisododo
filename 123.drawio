@@ -1,0 +1,306 @@
+<mxfile host="app.diagrams.net" modified="2025-01-01T00:00:00.000Z" agent="5.0" etag="bpmn-variant-1" version="22.1.0" type="device">
+  <diagram name="Обработка заказа" id="bpmn-process-order">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ПУЛ 1: Интернет-магазин -->
+        <mxCell id="pool-shop" value="Интернет-магазин" style="swimlane;startSize=40;horizontal=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="1400" height="500" as="geometry"/>
+        </mxCell>
+
+        <!-- Дорожка: Менеджер -->
+        <mxCell id="lane-manager" value="Менеджер по продажам" style="swimlane;startSize=30;horizontal=1;" vertex="1" parent="pool-shop">
+          <mxGeometry x="10" y="40" width="1380" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- Дорожка: Кладовщик -->
+        <mxCell id="lane-storekeeper" value="Кладовщик" style="swimlane;startSize=30;horizontal=1;" vertex="1" parent="pool-shop">
+          <mxGeometry x="10" y="170" width="1380" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- Дорожка: Логист -->
+        <mxCell id="lane-logist" value="Логист" style="swimlane;startSize=30;horizontal=1;" vertex="1" parent="pool-shop">
+          <mxGeometry x="10" y="300" width="1380" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- ПУЛ 2: Клиент -->
+        <mxCell id="pool-client" value="Клиент" style="swimlane;startSize=40;horizontal=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="580" width="1400" height="260" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== МЕНЕДЖЕР ========== -->
+        <mxCell id="start-manager" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;" vertex="1" parent="lane-manager">
+          <mxGeometry x="30" y="45" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="recieve-order" value="Получить заказ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="lane-manager">
+          <mxGeometry x="100" y="40" width="120" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="check-stock" value="Проверить наличие" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="lane-manager">
+          <mxGeometry x="270" y="40" width="120" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="gateway-xor" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="lane-manager">
+          <mxGeometry x="440" y="35" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="request-supplier" value="Запрос поставщику&#xa;(Сервисная задача)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="lane-manager">
+          <mxGeometry x="540" y="40" width="130" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="confirm-order" value="Подтвердить заказ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="lane-manager">
+          <mxGeometry x="730" y="40" width="120" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="send-confirm" value="Отправить подтверждение" style="shape=message;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="lane-manager">
+          <mxGeometry x="900" y="35" width="130" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="gateway-and-split" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="lane-manager">
+          <mxGeometry x="1090" y="35" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Потоки менеджера -->
+        <mxCell id="flow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-manager" source="start-manager" target="recieve-order">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-manager" source="recieve-order" target="check-stock">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-manager" source="check-stock" target="gateway-xor">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-manager" source="gateway-xor" target="request-supplier">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-manager" source="gateway-xor" target="confirm-order">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-manager" source="confirm-order" target="send-confirm">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-manager" source="send-confirm" target="gateway-and-split">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Возврат от поставщика -->
+        <mxCell id="flow-back-supplier" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;" edge="1" parent="lane-manager" source="request-supplier" target="check-stock">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== КЛАДОВЩИК ========== -->
+        <mxCell id="flow-to-storekeeper" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-storekeeper" source="gateway-and-split" target="pack-order">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1115" y="160"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="pack-order" value="Скомплектовать заказ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="lane-storekeeper">
+          <mxGeometry x="1090" y="40" width="130" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="data-object" value="Собранный заказ" style="shape=document;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="lane-storekeeper">
+          <mxGeometry x="1260" y="35" width="90" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="data-store" value="Складские остатки" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="lane-storekeeper">
+          <mxGeometry x="1260" y="100" width="90" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc-data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;" edge="1" parent="lane-storekeeper" source="pack-order" target="data-object">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc-store" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;" edge="1" parent="lane-storekeeper" source="pack-order" target="data-store">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="event-store-ready" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="lane-storekeeper">
+          <mxGeometry x="1145" y="100" width="20" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="flow-store-event" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-storekeeper" source="pack-order" target="event-store-ready">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== ЛОГИСТ ========== -->
+        <mxCell id="flow-to-logist" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-logist" source="gateway-and-split" target="arrange-delivery">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1115" y="290"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="arrange-delivery" value="Оформить доставку" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="lane-logist">
+          <mxGeometry x="1090" y="45" width="130" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="send-to-courier" value="Передать в доставку&#xa;(Сервисная задача)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="lane-logist">
+          <mxGeometry x="900" y="45" width="130" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="send-tracking" value="Отправить трек-номер" style="shape=message;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="lane-logist">
+          <mxGeometry x="730" y="40" width="130" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="gateway-and-merge" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="lane-logist">
+          <mxGeometry x="540" y="55" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="end-logist" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=3;" vertex="1" parent="lane-logist">
+          <mxGeometry x="430" y="70" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Потоки логиста -->
+        <mxCell id="flow-logist1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-logist" source="arrange-delivery" target="send-to-courier">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow-logist2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-logist" source="send-to-courier" target="send-tracking">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow-logist3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-logist" source="send-tracking" target="gateway-and-merge">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Слияние с кладовщиком -->
+        <mxCell id="flow-store-to-merge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-logist" source="event-store-ready" target="gateway-and-merge">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1155" y="290"/>
+              <mxPoint x="565" y="290"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="flow-merge-to-end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="lane-logist" source="gateway-and-merge" target="end-logist">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== КЛИЕНТ ========== -->
+        <mxCell id="client-start" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;" vertex="1" parent="pool-client">
+          <mxGeometry x="30" y="60" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="place-order" value="Оформить заказ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="pool-client">
+          <mxGeometry x="100" y="55" width="110" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="send-order" value="Отправить заказ" style="shape=message;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="pool-client">
+          <mxGeometry x="260" y="50" width="110" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="timer-wait" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="pool-client">
+          <mxGeometry x="420" y="65" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="receive-confirm" value="Получить подтверждение" style="shape=message;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rotation=-180;" vertex="1" parent="pool-client">
+          <mxGeometry x="500" y="50" width="130" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="gateway-xor-client" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="pool-client">
+          <mxGeometry x="680" y="65" width="40" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="pay-order" value="Оплатить заказ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="pool-client">
+          <mxGeometry x="770" y="55" width="110" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="timer-payment" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="pool-client">
+          <mxGeometry x="930" y="65" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="receive-delivery" value="Получить данные доставки" style="shape=message;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rotation=-180;" vertex="1" parent="pool-client">
+          <mxGeometry x="1010" y="50" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="client-end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=3;" vertex="1" parent="pool-client">
+          <mxGeometry x="1200" y="65" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="client-end-cancel" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=3;" vertex="1" parent="pool-client">
+          <mxGeometry x="770" y="140" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Потоки клиента -->
+        <mxCell id="cflow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="client-start" target="place-order">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="cflow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="place-order" target="send-order">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="cflow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="send-order" target="timer-wait">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="cflow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="timer-wait" target="receive-confirm">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="cflow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="receive-confirm" target="gateway-xor-client">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="cflow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="gateway-xor-client" target="pay-order">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="700" y="75" as="sourcePoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cflow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="pay-order" target="timer-payment">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="cflow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="timer-payment" target="receive-delivery">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="cflow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="receive-delivery" target="client-end">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="cflow-cancel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="pool-client" source="gateway-xor-client" target="client-end-cancel">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="155"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ========== ПОТОКИ СООБЩЕНИЙ (между пулами) ========== -->
+        <!-- Клиент → Менеджер: заказ -->
+        <mxCell id="msg-order" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeWidth=2;startArrow=oval;startFill=1;" edge="1" parent="1" source="send-order" target="recieve-order">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Менеджер → Клиент: подтверждение -->
+        <mxCell id="msg-confirm" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeWidth=2;startArrow=oval;startFill=1;" edge="1" parent="1" source="send-confirm" target="receive-confirm">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="965" y="530"/>
+              <mxPoint x="565" y="530"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Логист → Клиент: трек-номер -->
+        <mxCell id="msg-tracking" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeWidth=2;startArrow=oval;startFill=1;" edge="1" parent="1" source="send-tracking" target="receive-delivery">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="795" y="530"/>
+              <mxPoint x="1080" y="530"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ========== АННОТАЦИЯ ========== -->
+        <mxCell id="annotation" value="Поставщик имитируется&#xa;сервисной задачей" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" vertex="1" parent="1">
+          <mxGeometry x="540" y="460" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="note-line" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;" edge="1" parent="1" source="annotation" target="request-supplier">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
